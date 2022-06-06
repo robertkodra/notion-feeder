@@ -13,6 +13,7 @@ async function index() {
     const notionItem = {
       title: item.title,
       link: item.link,
+      category: item.category,
       content: htmlToNotionBlocks(item.content),
     };
     await addFeedItemToNotion(notionItem);

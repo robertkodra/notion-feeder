@@ -40,6 +40,7 @@ export async function getFeedUrlsFromNotion() {
 
   const feeds = response.results.map((item) => ({
     title: item.properties.Title.title[0].plain_text,
+    category: item.properties.Category.select[0].plain_text,
     feedUrl: item.properties.Link.url,
   }));
 
@@ -47,7 +48,7 @@ export async function getFeedUrlsFromNotion() {
 }
 
 export async function addFeedItemToNotion(notionItem) {
-  const { title, link, content } = notionItem;
+  const { title, category, link, content } = notionItem;
 
   const notion = new Client({
     auth: NOTION_API_TOKEN,
@@ -65,6 +66,15 @@ export async function addFeedItemToNotion(notionItem) {
             {
               text: {
                 content: title,
+              },
+            },
+          ],
+        },
+        Category: {
+          category: [
+            {
+              select: {
+                name: category,
               },
             },
           ],
